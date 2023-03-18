@@ -20,18 +20,12 @@ const getHref = async (inputUrl) => {
             return link.href
         });
     });
-    const correctHrefs = hrefs.map((href) => {
-        if(containURL(href, inputUrl)){
-            return href;
-        }
-        return null;
+    const correctHref = hrefs.filter((href, index) => {
+        return containURL(href, inputUrl) && hrefs.indexOf(href) === index;
     });
-    const deleteNullHrefs = correctHrefs.filter((item) => {
-        return item !== null;
-    });
-    console.log(deleteNullHrefs);
+    console.log(correctHref);
     await browser.close();
-    return deleteNullHrefs;
+    return correctHref;
 };
 
 getHref(inputUrl);
